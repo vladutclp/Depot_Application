@@ -60,10 +60,13 @@ class ProductTest < ActiveSupport::TestCase
 		assert_equal ['has already been taken'], product.errors[:title]
 	end
 
-	test 'price must be higher than 30$' do
-		product = products(:one)
-
-		assert product.price<30, "the actual price is #{product.price}"
+	test 'length of title must be at least 10 characters' do
+		product = Product.new(title: 		'zzz',
+							 description: 	'y',
+							 image_url: 	"fred.gif",
+							 price: 		1)		
+		assert product.invalid?
+		assert_equal ['is too short (minimum is 10 characters)'], product.errors[:title]
 	end
 
 end
