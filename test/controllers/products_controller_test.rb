@@ -60,4 +60,15 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to products_url
   end
+
+  test "should get show page and tell the number of products" do
+    get products_url
+    assert_response :success
+    sum = 0
+    products.each do |product|
+      sum += 1
+    end
+    assert_select '.image', sum
+  end
+
 end
