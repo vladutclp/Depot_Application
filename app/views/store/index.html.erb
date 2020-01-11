@@ -3,6 +3,9 @@
 <% end %>
 
 <h1>Your Pragmatic Catalog</h1>
+<% if session[:counter] > 5 %>
+	<h3><em>Accessed <%= session[:counter] %> times</em></h3>
+<% end %>
 
 <ul class="catalog">
 	<% cache @products do %>
@@ -16,6 +19,7 @@
 					</p>
 					<div class="price">
 						<%= number_to_currency(product.price, unit: "€", separator: ",") %>
+						<%= button_to 'Add to Cart', line_items_path(product_id: product) %>
 					</div>
 				</li>
 			<% end %>
