@@ -2,7 +2,8 @@ class LineItemsController < ApplicationController
   include CurrentCart
   before_action :set_cart, only: [:create] # call the set_cart method before the create() action
   before_action :set_line_item, only: [:show, :edit, :update, :destroy]
-
+  #Calls invalid_line_item if the record could not be found
+  rescue_from ActiveRecord::RecordNotFound, with: :invalid_line_item
   # GET /line_items
   # GET /line_items.json
   def index
@@ -75,4 +76,12 @@ class LineItemsController < ApplicationController
     def line_item_params
       params.require(:line_item).permit(:product_id)
     end
+
+  
+  
+  #Function used to log errors when you try to acces an unavailable line item
+  def invalid_line_item
+    logger.error "Cannot access line item with id #{params[:id]}"
+    redirect_to line_items_url, notice: "Invalid line item"
+  end
 end

@@ -1,6 +1,9 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :edit, :update, :destroy]
-  
+  ''' Raise an error when trying to acces an invalid product
+      If the product is invalid invalid_product() will be called
+  '''
+  rescue_from ActiveRecord::RecordNotFound, with: :invalid_product
   # GET /products
   # GET /products.json
   def index
@@ -73,4 +76,15 @@ class ProductsController < ApplicationController
     def product_params
       params.require(:product).permit(:title, :description, :image_url, :price)
     end
+
+    '''
+      Logs error when product could not be find
+      Uses logger() to record the error and then redirects the user to products #show view
+    '''
+  def invalid_product
+    logger.error "Attempt to acces invalid product id #{params[:id]}"
+    redirect_to products_url, notice: "Invalid product"
+  end
+
+
 end

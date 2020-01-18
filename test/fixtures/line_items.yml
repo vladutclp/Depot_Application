@@ -7,3 +7,11 @@ one:
 two:
   product: two
   cart: two
+
+three:
+  product: ruby
+  cart: two
+
+four:
+  product: ruby
+  cart: one
