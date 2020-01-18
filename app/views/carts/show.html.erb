@@ -11,6 +11,7 @@
 			<td class="quantity"><%= line_item.quantity %></td>
 			<td><%= line_item.product.title %></td>
 			<td class="price"><%= number_to_currency(line_item.total_price) %></td>
+			<td><%= button_to 'Delete', line_item, method: :delete, data: { confirm: 'Are you sure?'} %></td>
 		</tr>
 		<% end %>
 
@@ -25,7 +26,7 @@
 </article>
 
 <div class="buttons">
-	
+
 	<%= button_to 'Empty cart', @cart, method: :delete, data: { confirm: 'Are you sure?'} %>
 	<%= link_to 'Continue shopping', store_index_path %>
 	

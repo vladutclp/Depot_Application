@@ -10,6 +10,10 @@ class CartsController < ApplicationController
   # GET /carts/1
   # GET /carts/1.json
   def show
+    ''' If the user tries to acces other cart than the one from the session
+    it will be redirected to store#index 
+    '''
+    redirect_to store_index_url if @cart.id != session[:cart_id]
   end
 
   # GET /carts/new
