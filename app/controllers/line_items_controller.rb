@@ -1,6 +1,7 @@
 class LineItemsController < ApplicationController
+
   include CurrentCart
-  before_action :set_cart, only: [:create] # call the set_cart method before the create() action
+  before_action :set_cart, only: [:create, :update] # call the set_cart method before the create() action
   before_action :set_line_item, only: [:show, :edit, :update, :destroy]
   #Calls invalid_line_item if the record could not be found
   rescue_from ActiveRecord::RecordNotFound, with: :invalid_line_item
@@ -29,10 +30,10 @@ class LineItemsController < ApplicationController
   def create
     product = Product.find(params[:product_id])
     @line_item = @cart.add_product(product)
-
     respond_to do |format|
       if @line_item.save
-        format.html { redirect_to @line_item.cart}
+        format.html { redirect_to store_index_url}
+        format.js { @current_item = @line_item}
         format.json { render :show, status: :created, location: @line_item }
         session[:counter] = 0
       else
@@ -45,9 +46,14 @@ class LineItemsController < ApplicationController
   # PATCH/PUT /line_items/1
   # PATCH/PUT /line_items/1.json
   def update
+    @line_item = @cart.decrement_line_item(@line_item)
+
     respond_to do |format|
       if @line_item.update(line_item_params)
-        format.html { redirect_to @line_item, notice: 'Line item was successfully updated.' }
+        @line_item.destroy if @line_item.quantity < 1
+        format.html { redirect_to store_index_url, notice: 'Line item was successfully updated.' }
+        format.js
+       # binding.pry
         format.json { render :show, status: :ok, location: @line_item }
       else
         format.html { render :edit }
@@ -62,7 +68,7 @@ class LineItemsController < ApplicationController
     cart_id = session[:cart_id]
     @line_item.destroy
     respond_to do |format|
-      format.html { redirect_to cart_url(cart_id), notice: 'Line item was successfully destroyed.' }
+      format.html { redirect_to store_index_url, notice: 'Line item was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -85,4 +91,6 @@ class LineItemsController < ApplicationController
     logger.error "Cannot access line item with id #{params[:id]}"
     redirect_to line_items_url, notice: "Invalid line item"
   end
+
+  
 end

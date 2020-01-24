@@ -19,6 +19,7 @@ class CartsController < ApplicationController
   # GET /carts/new
   def new
     @cart = Cart.new
+    
   end
 
   # GET /carts/1/edit
@@ -29,7 +30,7 @@ class CartsController < ApplicationController
   # POST /carts.json
   def create
     @cart = Cart.new(cart_params)
-
+    session[:cart_empty] = false
     respond_to do |format|
       if @cart.save
         format.html { redirect_to @cart, notice: 'Cart was successfully created.' }
@@ -58,10 +59,12 @@ class CartsController < ApplicationController
   # DELETE /carts/1
   # DELETE /carts/1.json
   def destroy
+    session[:cart_empty] = true
     @cart.destroy if @cart.id == session[:cart_id]
     session[:cart_id] = nil
     respond_to do |format|
       format.html { redirect_to store_index_url, notice: 'Your cart is currently empty' }
+      format.js
       format.json { head :no_content }
     end
   end
