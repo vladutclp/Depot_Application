@@ -2,8 +2,10 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 .carts {
+	
 	table{
 		border-collapse: collapse;
+
 	}
 	td {
 		padding: 0.5em;
@@ -41,11 +43,6 @@
 		background-color: #992;
 	
 	}
-
-	a{
-		position: relative;
-		top: 10px;
-	}
-
-
 }
+
+

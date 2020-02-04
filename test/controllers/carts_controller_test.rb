@@ -24,7 +24,8 @@ class CartsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should show cart" do
-    get cart_url(@cart)
+    #get cart_url(@cart)
+    get store_index_url #cart is now moved in the side bar in the store_index view
     assert_response :success
   end
 

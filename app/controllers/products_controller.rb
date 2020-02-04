@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
-  before_action :set_product, only: [:show, :edit, :update, :destroy]
+  before_action :set_product, only: [:show, :edit, :update, :destroy, :who_bought]
   ''' Raise an error when trying to acces an invalid product
       If the product is invalid invalid_product() will be called
   '''
@@ -91,5 +91,17 @@ class ProductsController < ApplicationController
     redirect_to products_url, notice: "Invalid product"
   end
 
+
+  def who_bought
+    @product = Product.find(params[:id])
+    @latest_order = @product.orders.order(:updated_at).last
+
+    if stale?(@latest_order)
+      respond_to do |format|
+        format.atom
+        format.html 
+      end
+    end
+  end
 
 end

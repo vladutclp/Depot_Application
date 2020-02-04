@@ -17,4 +17,16 @@ class Cart < ApplicationRecord
 		line_items.to_a.sum {|item| item.total_price}
 	end
 
+
+	def decrement_line_item(line_item)
+	
+		if line_item.quantity >= 1
+			line_item.quantity -= 1
+		end
+
+		line_item
+
+	end
+
+
 end

@@ -1,0 +1,30 @@
+<div class="information">
+	<p>Who bought <strong><%= @product.title %></strong>:</p>
+	<% @product.orders.each do |order| %>
+	<p>Order #<%= order.id %>, Shipped to: <em><%= order.adress %></em></p>
+</div>
+	<table class="who_bought">
+		<thead>
+			<tr>
+				<th>Product</th>
+				<th>Quantity</th>
+				<th>Total Price</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% order.line_items.each do |item| %>
+				<tr>
+					<td><%= item.product.title %></td>
+					<td><%= item.quantity %></td>
+					<td><%= number_to_currency item.total_price %></td>
+				</tr>
+			<% end %>
+		</tbody>
+		<tfoot>
+			<tr>
+				<th colspan="2" align="left">Total</th>
+				<th align="left"><%= number_to_currency order.line_items.map(&:total_price).sum %></th>
+			</tr>
+		</tfoot>
+	</table>
+<% end %>

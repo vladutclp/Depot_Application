@@ -47,13 +47,13 @@ class LineItemsController < ApplicationController
   # PATCH/PUT /line_items/1.json
   def update
     @line_item = @cart.decrement_line_item(@line_item)
-
+    
     respond_to do |format|
       if @line_item.update(line_item_params)
         @line_item.destroy if @line_item.quantity < 1
         format.html { redirect_to store_index_url, notice: 'Line item was successfully updated.' }
-        format.js
-       # binding.pry
+        #format.js
+        #binding.pry
         format.json { render :show, status: :ok, location: @line_item }
       else
         format.html { render :edit }

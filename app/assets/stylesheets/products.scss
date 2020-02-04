@@ -54,3 +54,28 @@
 		}
 	}
 }
+.information{
+	border-style: groove;
+	padding: 0.354em 0.5em;
+	border: 1px solid black;
+	margin-bottom: 10px;
+
+}
+.who_bought{
+	
+	border-collapse: collapse;
+	td{
+		padding: 0.5em;
+		margin: 0;
+		border: 1px solid black;
+	}
+	tr{
+		background-color: #effeef;
+		border: 1px solid black;
+	}
+	th{
+		padding-left: 10px;
+		padding-right: 10px;
+
+	}
+}
