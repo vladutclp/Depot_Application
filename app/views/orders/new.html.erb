@@ -2,3 +2,5 @@
 	<h1>Please enter you details:</h1>
 		<%= render 'form', order: @order, locals:{ btn_clicked: @btn_clicked } %>
 </section>
+
+<%= javascript_pack_tag("pay_type") %>

@@ -86,6 +86,16 @@ class OrdersController < ApplicationController
         end
       end
 
-    
+    if order_params[:pay_type] == "Credit Card"
+      params.require(:order).permit(:credit_card_number, :expiration_date, :credit_card_ccv)
+    elsif order_params[:pay_type] == "Cash"
+      params.require(:order).permit(:cash_adr_recipe, :currency)
+    elsif order_params[:pay_type] == "Check"
+      params.require(:order).permit(:routing_number, :account_number)
+    elsif order_params[:pay_type] == "Purchase order"
+      params.require(:order).permit(:po_number)
+    else
+      {}
+    end
 
 end

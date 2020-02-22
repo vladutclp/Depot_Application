@@ -4,7 +4,8 @@ class Order < ApplicationRecord
 	enum pay_type: {
 		"Check" 				 => 0,
 		"Credit card" 	 => 1,
-		"Purchase order" => 2
+		"Purchase order" => 2,
+		"Cash"					 => 3
 	}
 	
 	validates :name, :adress, :email, presence: true
