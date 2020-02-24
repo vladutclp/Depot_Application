@@ -38,4 +38,19 @@ class CartsTest < ApplicationSystemTestCase
 
     assert_text "Cart was successfully destroyed"
   end
+
+
+  test "Add to cart button and Empty Cart button reveal/hide the cart" do
+    visit store_index_url
+
+    first('.catalog li').click_on 'Add to Cart'
+
+    assert_selector "#cart"
+
+    click_on 'Empty cart'
+
+    page.driver.browser.switch_to.alert.accept
+    assert_no_selector "#cart"
+
+  end
 end

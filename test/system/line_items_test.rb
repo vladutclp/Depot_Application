@@ -31,7 +31,7 @@ class LineItemsTest < ApplicationSystemTestCase
     click_on "Update Line item"
 
     assert_text "Line item was successfully updated"
-    click_on "Back"
+
   end
 
   test "destroying a Line item" do
@@ -42,4 +42,13 @@ class LineItemsTest < ApplicationSystemTestCase
 
     assert_text "Line item was successfully destroyed"
   end
+
+  test "highlight feature" do
+    visit store_index_url
+
+    first('.catalog li').click_on 'Add to Cart'
+
+   assert_selector ".line-item-highlight"
+  end
+
 end
