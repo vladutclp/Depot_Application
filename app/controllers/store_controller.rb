@@ -1,4 +1,5 @@
 class StoreController < ApplicationController
+  skip_before_action :authorize
   ''' The cart was added in the sider. To see it we have to create first in the store_controller index method'''
   include CurrentCart
   before_action :set_cart

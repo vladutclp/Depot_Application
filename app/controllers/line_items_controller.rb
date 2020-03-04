@@ -1,5 +1,5 @@
 class LineItemsController < ApplicationController
-
+  skip_before_action :authorize, only: :create
   include CurrentCart
   before_action :set_cart, only: [:create, :update] # call the set_cart method before the create() action
   before_action :set_line_item, only: [:show, :edit, :update, :destroy]
@@ -89,6 +89,7 @@ class LineItemsController < ApplicationController
   #Function used to log errors when you try to acces an unavailable line item
   def invalid_line_item
     logger.error "Cannot access line item with id #{params[:id]}"
+    OrderMailer.errorMail.deliver_now
     redirect_to line_items_url, notice: "Invalid line item"
   end
 

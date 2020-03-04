@@ -42,11 +42,30 @@
         <li>
           <a href="/Contact">Contact</a>
         </li>
-        <li>
-          <div>Accessed at: <%= Time.now.strftime("%k:%M") %></div>
-        </li>
+        
+       
 
       </ul>
+
+      <% if session[:user_id] %>
+        <nav class="logged_in_nav">
+          <ul>
+            <li><%= link_to 'Orders',   orders_path %></li>
+            <li><%= link_to 'Products', products_path %></li>
+            <li><%= link_to 'Users',    users_path %></li>
+            <li><%= link_to 'Logout',   logout_url %></li>
+            <li>Accessed at: <%= Time.now.strftime("%k:%M") %></li>
+          </ul>
+        </nav>
+      <% else %>
+      <nav class="logged_in_nav">
+          <ul>
+            
+            <li><%= link_to 'Log in', login_url %></li>
+            <li>Accessed at: <%= Time.now.strftime("%k:%M") %></li>
+          </ul>
+        </nav>
+      <% end %>
     </nav>
 
     <main class='<%= controller.controller_name %>'>

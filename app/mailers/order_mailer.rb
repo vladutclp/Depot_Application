@@ -22,4 +22,11 @@ class OrderMailer < ApplicationMailer
 
     mail to: order.email, subject: 'Pragmatic Store Order Confirmation'
   end
+
+  def errorMail()
+
+    mail to: "admin@depot.com", subject: "Security Mail"
+
+  end 
+
 end
