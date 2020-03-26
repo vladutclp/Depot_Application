@@ -21,7 +21,7 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
-   render :validate_password
+   #render :validate_password
     
   end
 
@@ -44,12 +44,12 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
-    entered_password = params[:entered_password]
-    print @user.try(:authenticate, entered_password)
-    binding.pry
-    if entered_password == @user.password
+    entered_password = params[:user][:entered_password]
+    @user.try(:authenticate, entered_password)
+    #binding.pry
+    if @user.try(:authenticate, entered_password)
       respond_to do |format|
-        if @user.update(user_params)
+        if @user.update(user_params.except(:entered_password)) #update @user without entered_password; entered_password does not exist
           format.html { redirect_to users_url, notice: "User #{@user.name} was successfully updated." }
           format.json { render :show, status: :ok, location: @user }
         else
